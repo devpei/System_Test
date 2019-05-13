@@ -1,0 +1,110 @@
+<form nz-form class="ant-advanced-search-form" [formGroup]="searchForm" (ngSubmit)="submitSearch()">
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12" style="font-size:16px;">搜索</div>
+    <div nz-col nzSpan="12" style="text-align:right;"><a (click)="toggleCollapse()">
+        {{isCollapse ? '收起' : '展开'}}
+        <i nz-icon [type]="isCollapse ? 'up' : 'down'"></i>
+      </a>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" [style.display]="isCollapse? 'block' : 'none'" style="margin-top:24px;">
+    <div nz-col nzSpan="8">
+      <nz-form-item nzFlex="false">
+        <nz-form-label nzFor="serialNumber">串号</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入串号" formControlName="serialNumber" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="8">
+      <nz-form-item nzFlex="false">
+        <nz-form-label nzFor="devicesModel">设备型号</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入设备型号" formControlName="devicesModel" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="8">
+      <nz-form-item nzFlex="false">
+        <nz-form-label nzFor="userCode">工位</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入员工编号" formControlName="userCode" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="24">
+      <nz-form-item nzFlex="false">
+        <nz-form-label nzFor="dateRange">时间段</nz-form-label>
+        <nz-form-control>
+          <nz-range-picker name="dateRange" formControlName="dateRange" [(ngModel)]="dateRange" nzShowTime
+            nzFormat="yyyy-MM-dd HH:mm:ss">
+          </nz-range-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [style.display]="isCollapse? 'block' : 'none'">
+    <div nz-col nzSpan="24" style="text-align: center;">
+      <button nz-button [nzType]="'primary'">查找</button>
+      <button nz-button (click)="resetForm()">清空</button>
+    </div>
+  </div>
+</form>
+
+<div nz-row style="text-align:right;margin-top:12px;">
+  <button nz-button nzType="primary" (click)="generateExcel()"><i nz-icon type="download"></i>导出Excel</button>
+</div>
+
+<div style="margin-top:12px;">
+  <nz-table #basicTable [nzData]="listData" nzSize="middle" [nzFrontPagination]="'false'" [nzTotal]="total"
+    [nzPageIndex]="current" (nzPageIndexChange)="pageIndexChange($event)" [nzLoading]="tableIsLoading">
+    <thead>
+      <tr>
+        <!-- <th nzShowExpand></th> -->
+        <th>串号</th>
+        <th>MAC地址</th>
+        <th>设备型号</th>
+        <th>系统版本</th>
+        <th>测试时间</th>
+        <th>测试结果</th>
+        <th [nzAlign]="'center'">查看详情</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="basicTable.data">
+        <tr>
+          <!-- <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td> -->
+          <td>{{data.serialNumber}}</td>
+          <td>{{data.mac}}</td>
+          <td>{{data.devicesModel}}</td>
+          <td>{{data.systemVersion}}</td>
+          <td>{{data.testDate}}</td>
+          <td>
+            <nz-badge [nzStatus]="data.success?'success':'error'" [nzText]="data.success?'通过':'失败'"></nz-badge>
+          </td>
+          <td [nzAlign]="'center'">
+            <a href="javascript:;" [routerLink]="'/admin/testresult/'+data.id"><i nz-icon nzType="info-circle"
+                nzTheme="fill" style="font-size: 22px;vertical-align: middle;"></i></a>
+          </td>
+        </tr>
+        <!-- <tr [nzExpand]="mapOfExpandData[data.id]">
+          <td style="border-right:1px solid #e8e8e8;">详情</td>
+          <td colspan="6">
+            <div nz-row class="deteil">
+              <div nz-col nzSpan="24" style="font-size:16px;">设备简要信息</div>
+              <div nz-col nzSpan="8">设备型号：{{data.devicesModel}}</div>
+              <div nz-col nzSpan="8">串号：{{data.serialNumber}}</div>
+              <div nz-col nzSpan="8">MAC地址：{{data.mac}}</div>
+              <div nz-col nzSpan="8">系统版本：{{data.systemVersion}}</div>
+              <div nz-col nzSpan="8">测试员编号：{{data.userCode}}</div>
+              <div nz-col nzSpan="8">测试时间：{{data.testDate}}</div>
+              <div nz-col nzSpan="24">
+                <a href="javascript:;" [routerLink]="'/admin/testresult/'+data.id">查看测试详情 >></a>
+              </div>
+            </div>
+          </td>
+        </tr> -->
+      </ng-template>
+    </tbody>
+  </nz-table>
+</div>

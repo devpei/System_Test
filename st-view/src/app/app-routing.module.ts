@@ -1,7 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './login/auth.guard';
+
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  }, {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule',
+    canLoad: [AuthGuard]
+  }, {
+    path: '',
+    redirectTo: 'admin',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

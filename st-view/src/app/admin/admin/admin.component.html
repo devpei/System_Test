@@ -1,0 +1,35 @@
+<nz-layout class="layout">
+  <nz-header style="position:fixed; width:100%;z-index: 999;">
+      <!-- <h2 style="color:white;">测试系统</h2> -->
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+      <!-- <li nz-menu-item>系统</li>
+      <li nz-menu-item>nav 2</li>
+      <li nz-menu-item>nav 3</li> -->
+    </ul>
+  </nz-header>
+  <nz-layout style="margin-top:64px;">
+    <nz-sider [nzWidth]="200" style="overflow: auto; height: 100vh; position: fixed; left: 0;" nzTheme="light">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item>
+          <a routerLink="dashboard">
+            <i nz-icon nzType="area-chart" nzTheme="outline"></i>统计分析
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a routerLink="testlist">
+            <i nz-icon nzType="database" nzTheme="outline"></i>测试记录
+          </a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout style="padding:0 24px 0px 24px;margin-left: 200px;">
+      <nz-breadcrumb style="margin:16px 0;">
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-content style="background:#fff;padding: 24px; min-height: 85vh;">
+        <router-outlet></router-outlet>
+      </nz-content>
+      <nz-footer style="text-align: center;padding: 15px 50px;">Test System ©2019 peiqianlei.</nz-footer>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

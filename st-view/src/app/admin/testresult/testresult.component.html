@@ -1,0 +1,98 @@
+<div nz-row style="font-size:20px;">
+  <p>
+    <a routerLink="/admin/testlist">
+      <i nz-icon nzType="arrow-left" nzTheme="outline" style="color:rgba(0, 0, 0, 0.65);"></i>
+    </a>&nbsp;&nbsp;&nbsp;&nbsp;MAC地址：{{testResult.devices.mac}}
+  </p>
+</div>
+
+<div nz-row class="devicesinfo">
+  <div nz-col nzSpan="8">串号：{{testResult.devices.serialNumber}}</div>
+  <div nz-col nzSpan="8">设备型号：{{testResult.devices.devicesModel}}</div>
+  <div nz-col nzSpan="8">系统版本：{{testResult.devices.systemVersion}}</div>
+  <div nz-col nzSpan="8">员工编号：{{testResult.devices.userCode}}</div>
+</div>
+
+<nz-divider nzText="测试结果" nzOrientation="left"></nz-divider>
+<div nz-row class="resultblock" *ngIf="testResult.testRrcords != null">
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.ethernet != null">以太网：
+    <nz-badge [nzStatus]="testResult.testRrcords.ethernet.success?'success':'error'"
+      [nzText]="testResult.testRrcords.ethernet.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.wifi != null">WIFI：
+    <nz-badge [nzStatus]="testResult.testRrcords.wifi.success?'success':'error'"
+      [nzText]="testResult.testRrcords.wifi.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.can != null">Can总线：
+    <nz-badge [nzStatus]="testResult.testRrcords.can.success?'success':'error'"
+      [nzText]="testResult.testRrcords.can.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.fourG != null">4G网络：
+    <nz-badge [nzStatus]="testResult.testRrcords.fourG.success?'success':'error'"
+      [nzText]="testResult.testRrcords.fourG.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.sdCard != null">SD卡：
+    <nz-badge [nzStatus]="testResult.testRrcords.sdCard.success?'success':'error'"
+      [nzText]="testResult.testRrcords.sdCard.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.hdmi != null">HDMI：
+    <nz-badge [nzStatus]="testResult.testRrcords.hdmi.success?'success':'error'"
+      [nzText]="testResult.testRrcords.hdmi.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.camera != null">相机：
+    <nz-badge [nzStatus]="testResult.testRrcords.camera.success?'success':'error'"
+      [nzText]="testResult.testRrcords.camera.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.video != null">播放器：
+    <nz-badge [nzStatus]="testResult.testRrcords.video.success?'success':'error'"
+      [nzText]="testResult.testRrcords.video.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.gpio != null">通用输入输出：
+    <nz-badge [nzStatus]="testResult.testRrcords.gpio.success?'success':'error'"
+      [nzText]="testResult.testRrcords.gpio.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.pressure != null">压力测试：
+    <nz-badge [nzStatus]="testResult.testRrcords.pressure.success?'success':'error'"
+      [nzText]="testResult.testRrcords.pressure.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.rtc != null">RTC：
+    <nz-badge [nzStatus]="testResult.testRrcords.rtc.success?'success':'error'"
+      [nzText]="testResult.testRrcords.rtc.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.volume != null">容量测试：
+    <nz-badge [nzStatus]="testResult.testRrcords.volume.success?'success':'error'"
+      [nzText]="testResult.testRrcords.volume.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.backlight != null">背光：
+    <nz-badge [nzStatus]="testResult.testRrcords.backlight.success?'success':'error'"
+      [nzText]="testResult.testRrcords.backlight.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.navigationBar != null">状态/导航栏：
+    <nz-badge [nzStatus]="testResult.testRrcords.navigationBar.success?'success':'error'"
+      [nzText]="testResult.testRrcords.navigationBar.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.systemAttribute != null">系统属性：
+    <nz-badge [nzStatus]="testResult.testRrcords.systemAttribute.success?'success':'error'"
+      [nzText]="testResult.testRrcords.systemAttribute.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="8" *ngIf="testResult.testRrcords.sim != null">SIM热插拔：
+    <nz-badge [nzStatus]="testResult.testRrcords.sim.success?'success':'error'"
+      [nzText]="testResult.testRrcords.sim.success?'通过':'失败'"></nz-badge>
+  </div>
+  <div nz-col nzSpan="24" *ngIf="testResult.testRrcords.serialPortList != null">串口：
+    <div nz-row *ngFor="let item of testResult.testRrcords.serialPortList">
+      <div nz-col nzSpan="4">串口名：{{item.serialName}}</div>
+      <div nz-col nzSpan="20">
+        <nz-badge [nzStatus]="item.success?'success':'error'" [nzText]="item.success?'通过':'失败'"></nz-badge>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="24" *ngIf="testResult.testRrcords.usbList != null">USB：
+    <div nz-row *ngFor="let item of testResult.testRrcords.usbList">
+      <div nz-col nzSpan="4">接入标识：{{item.mark}}</div>
+      <div nz-col nzSpan="20">
+        <nz-badge [nzStatus]="item.success?'success':'error'" [nzText]="item.success?'通过':'失败'"></nz-badge>
+      </div>
+    </div>
+  </div>
+</div>

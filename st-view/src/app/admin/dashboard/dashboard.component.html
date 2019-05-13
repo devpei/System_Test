@@ -1,0 +1,23 @@
+<nz-row>
+  <nz-col [nzSpan]="8" style="padding-right:20px;">
+    <nz-statistic [nzValue]="todayTestNumber | number" [nzTitle]="'今日测试量'"></nz-statistic>
+  </nz-col>
+  <nz-col [nzSpan]="8">
+    <nz-statistic [nzValue]="todayFailNumber | number" [nzTitle]="'今日失败量'"></nz-statistic>
+  </nz-col>
+  <nz-col [nzSpan]="8" style="padding-left:20px;">
+    <nz-statistic [nzValue]="successRate | number" [nzSuffix]="'%'" [nzTitle]="'今日通过率'"></nz-statistic>
+  </nz-col>
+</nz-row>
+<nz-row>
+  <nz-col [nzSpan]="16">
+    <nz-card nzTitle="近7天产量统计" [nzBordered]="'false'" [nzBodyStyle]="{'background-color':'white'}">
+      <div echarts [options]="weekYieldOption" class="chart"></div>
+    </nz-card>
+  </nz-col>
+  <nz-col [nzSpan]="8">
+    <nz-card nzTitle="近7天产量分布" [nzBordered]="'false'" [nzBodyStyle]="{'background-color':'white'}">
+      <div echarts [options]="weekProfileOption" class="chart"></div>
+    </nz-card>
+  </nz-col>
+</nz-row>

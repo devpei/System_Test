@@ -1,0 +1,14 @@
+nz-card {
+    border-radius: none;
+}
+
+nz-statistic {
+    background-color: #426ab3;
+    color: white;
+    padding: 15px;
+    margin-bottom: 24px;
+}
+
+.chart {
+    height: 500px;
+}
