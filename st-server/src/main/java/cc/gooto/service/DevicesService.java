@@ -1,8 +1,11 @@
 package cc.gooto.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import cc.gooto.entity.Devices;
+import cc.gooto.entity.vo.ChartData;
 import cc.gooto.entity.vo.TestResult;
 
 public interface DevicesService extends IService<Devices> {
@@ -45,4 +48,28 @@ public interface DevicesService extends IService<Devices> {
 	 * @return
 	 */
 	int todayFailNumber();
+
+	/**
+	 * 查询周期范围内的测试总数量
+	 * 
+	 * @param cycle
+	 * @return
+	 */
+	int testNumber(int cycle);
+
+	/**
+	 * 查询周期范围内的失败的数量
+	 * 
+	 * @param cycle
+	 * @return
+	 */
+	int failNumber(int cycle);
+
+	/**
+	 * 产量查询
+	 * 
+	 * @param cycle 周期（天）
+	 * @return
+	 */
+	List<ChartData> yieldChartData(int cycle);
 }

@@ -32,33 +32,8 @@ export class DashboardComponent implements OnInit {
   /**初始方法 */
   ngOnInit() {
     this.getBaseStatistics();
-    this.weekYieldOption = {
-      xAxis: {
-        type: 'category',
-        data: ['2019-05-06', '2019-05-07', '2019-05-08', '2019-05-09', '2019-05-10', '2019-05-11', '2019-05-12']
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'bar'
-      }]
-    };
-    this.weekProfileOption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-      },
-      series: [{
-        name: '占比',
-        type: 'pie',
-        data: [
-          { value: 10, name: '成功' },
-          { value: 2, name: '失败' }
-        ].sort(function (a, b) { return a.value - b.value; }),
-      }]
-    }
+    this.getYieldChartData('7');
+    this.getProfileOption('7');
   }
 
   /**获取基础统计数据 */
@@ -68,6 +43,57 @@ export class DashboardComponent implements OnInit {
         this.todayTestNumber = data.data.todayTestNumber;
         this.todayFailNumber = data.data.todayFailNumber;
         this.successRate = data.data.successRate;
+      }
+    });
+  }
+
+  /**获取产量统计数据 */
+  getYieldChartData(cycle: string): void {
+    this.http.get('/api/dashboard/chartData').subscribe((data: any) => {
+      if (data.result === 1) {
+        let xs = new Array();
+        let ys = new Array();
+        data.data.forEach((element: any) => {
+          xs.push(element.key);
+          ys.push(element.value);
+        });
+        this.weekYieldOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c}台)"
+          },
+          xAxis: {
+            type: 'category',
+            data: xs
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            name: '产量',
+            data: ys,
+            type: 'bar'
+          }]
+        };
+      }
+    });
+  }
+
+  /**获取产量分布 */
+  getProfileOption(cycle: string): void {
+    this.http.get('/api/dashboard/profileOption').subscribe((data: any) => {
+      if (data.result === 1) {
+        this.weekProfileOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          series: [{
+            name: '占比',
+            type: 'pie',
+            data: data.data.sort(function (a, b) { return a.value - b.value; }),
+          }]
+        }
       }
     });
   }

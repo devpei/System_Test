@@ -29,6 +29,7 @@ import cc.gooto.entity.UsbTest;
 import cc.gooto.entity.VideoTest;
 import cc.gooto.entity.VolumeTest;
 import cc.gooto.entity.WifiTest;
+import cc.gooto.entity.vo.ChartData;
 import cc.gooto.entity.vo.TestRecords;
 import cc.gooto.entity.vo.TestResult;
 import cc.gooto.mapper.DevicesMapper;
@@ -363,5 +364,20 @@ public class DevicesServiceImpl extends ServiceImpl<DevicesMapper, Devices> impl
 	@Override
 	public int todayFailNumber() {
 		return devicesMapper.todayFailNumber();
+	}
+
+	@Override
+	public List<ChartData> yieldChartData(int cycle) {
+		return devicesMapper.yieldChartData(cycle);
+	}
+
+	@Override
+	public int testNumber(int cycle) {
+		return devicesMapper.testNumber(cycle);
+	}
+
+	@Override
+	public int failNumber(int cycle) {
+		return devicesMapper.failNumber(cycle);
 	}
 }

@@ -11,12 +11,12 @@
 </nz-row>
 <nz-row>
   <nz-col [nzSpan]="16">
-    <nz-card nzTitle="近7天产量统计" [nzBordered]="'false'" [nzBodyStyle]="{'background-color':'white'}">
+    <nz-card nzTitle="近7天产量统计" [nzBordered]="'false'" [nzBodyStyle]="{'background-color':'white','padding':'0px'}">
       <div echarts [options]="weekYieldOption" class="chart"></div>
     </nz-card>
   </nz-col>
   <nz-col [nzSpan]="8">
-    <nz-card nzTitle="近7天产量分布" [nzBordered]="'false'" [nzBodyStyle]="{'background-color':'white'}">
+    <nz-card nzTitle="近7天产量分布" [nzBordered]="'false'" [nzBodyStyle]="{'background-color':'white','padding':'0px'}">
       <div echarts [options]="weekProfileOption" class="chart"></div>
     </nz-card>
   </nz-col>
