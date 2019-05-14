@@ -31,7 +31,7 @@
 		from tb_devices
 		group by
 		date(test_date)
-		) b on a.date = b.datetime;
+		) b on a.date = b.datetime
 	</select>
 
 	<!-- 分页结果集 -->

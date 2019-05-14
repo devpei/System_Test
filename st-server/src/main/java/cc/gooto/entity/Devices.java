@@ -31,6 +31,11 @@ public class Devices {
 	private String mac;
 
 	/**
+	 * 编号
+	 */
+	private String devicesCode;
+
+	/**
 	 * 串号
 	 */
 	private String serialNumber;

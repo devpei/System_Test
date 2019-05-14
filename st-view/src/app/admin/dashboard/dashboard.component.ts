@@ -54,13 +54,13 @@ export class DashboardComponent implements OnInit {
         let xs = new Array();
         let ys = new Array();
         data.data.forEach((element: any) => {
-          xs.push(element.key);
-          ys.push(element.value);
+          xs.unshift(element.key);
+          ys.unshift(element.value);
         });
         this.weekYieldOption = {
           tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b} : {c}台)"
+            formatter: "{a} <br/>{b} : {c}台"
           },
           xAxis: {
             type: 'category',
