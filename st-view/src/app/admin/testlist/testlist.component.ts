@@ -94,11 +94,14 @@ export class TestlistComponent implements OnInit {
           this.message.create('error', '必需在搜索框选择一个时间范围');
           return;
         }
+        const messageId = this.message.loading('正在生成Excel表格，请稍后...如果数据较多请耐心等待', { nzDuration: 0 }).messageId;
         this.http.get('/api/devices/generateExcel1', {
           params: params,
           responseType: "blob"
         }).subscribe((data: Blob) => {
+          this.message.remove(messageId);
           saveAs(data, 'baobiao.xlsx');
+          this.message.create('success', '表格生成成功');
         });
       }
     });

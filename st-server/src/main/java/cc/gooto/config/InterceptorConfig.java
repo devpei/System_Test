@@ -34,7 +34,6 @@ public class InterceptorConfig implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o)
 			throws Exception {
 		HttpSession session = httpServletRequest.getSession();
-		System.out.println("==>" + session.getAttribute("user"));
 		if (!StringUtils.isEmpty(session.getAttribute("user"))) {
 			return true;
 		} else {

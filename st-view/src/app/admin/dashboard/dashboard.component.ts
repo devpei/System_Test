@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
       if (data.result === 1) {
         this.todayTestNumber = data.data.todayTestNumber;
         this.todayFailNumber = data.data.todayFailNumber;
-        this.successRate = data.data.successRate;
+        this.successRate = parseFloat(data.data.successRate) * 100;
       }
     });
   }
@@ -97,5 +97,4 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-
 }

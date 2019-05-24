@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cc.gooto.base.ExcelUtils;
 import cc.gooto.base.ResultResponse;
@@ -34,9 +36,11 @@ import cc.gooto.config.GlobalAttribute;
 import cc.gooto.entity.Devices;
 import cc.gooto.entity.vo.TestResult;
 import cc.gooto.service.DevicesService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(value = "devices")
+@Slf4j
 public class DevicesController {
 
 	@Autowired
@@ -110,24 +114,29 @@ public class DevicesController {
 	 * 
 	 * @param object
 	 * @return
+	 * @throws JsonProcessingException
 	 */
 	@PostMapping(value = "resultTest")
-	public ResultResponse<Object> resultTest(@RequestBody TestResult testResult) {
-		System.out.println(testResult);
+	public ResultResponse<Object> resultTest(@RequestBody TestResult testResult) throws JsonProcessingException {
+		ObjectMapper om = new ObjectMapper();
+		log.info("<==上报" + om.writeValueAsString(testResult));
 		QueryWrapper<Devices> queryWrapper = new QueryWrapper<Devices>();
 		queryWrapper.eq("serial_number", testResult.getDevices().getSerialNumber());
 		Devices one = deviceService.getOne(queryWrapper);
 		if (!ObjectUtils.isEmpty(one)) {
 			if (testResult.isForceUpdate()) {
 				boolean updateTestResult = deviceService.updateTestResult(one, testResult);
+				log.info("<==强制写入" + (updateTestResult ? "成功" : "失败"));
 				return updateTestResult ? ResultResponse.success(testResult) : ResultResponse.error("强制写入失败");
 			} else {
+				log.info("<==串号已经使用");
 				return ResultResponse.error("该串号已经使用");
 			}
 		} else {
 			// 故意塞值，防止非法手段中途拼装数据，即使是不合法数据，但是能保证数据唯一
 			testResult.getDevices().setId(null);
 			boolean saveTestResult = deviceService.saveTestResult(testResult);
+			log.info("<==" + (saveTestResult ? "保存成功" : "保存失败"));
 			return saveTestResult ? ResultResponse.success(testResult) : ResultResponse.error("保存失败");
 		}
 	}
@@ -162,7 +171,7 @@ public class DevicesController {
 			HttpServletResponse response) throws ParseException, IOException {
 		QueryWrapper<Devices> queryWrapper = new QueryWrapper<Devices>();
 		if (!StringUtils.isEmpty(deviceModel)) {
-			queryWrapper.like("devices_model", deviceModel);
+			queryWrapper.eq("devices_model", deviceModel);
 		}
 		if (!StringUtils.isEmpty(userCode)) {
 			queryWrapper.eq("user_code", userCode);
@@ -225,13 +234,13 @@ public class DevicesController {
 	 * @throws IOException
 	 */
 	@GetMapping(value = "generateExcel1")
-	public void generateExcel1(@RequestParam(name = "deviceModel", required = false) String deviceModel,
+	public void generateExcel1(@RequestParam(name = "devicesModel", required = false) String devicesModel,
 			@RequestParam(name = "userCode", required = false) String userCode,
 			@RequestParam(name = "startDate") String startDate, @RequestParam(name = "endDate") String endDate,
 			HttpServletResponse response) throws ParseException, IOException {
 		QueryWrapper<Devices> queryWrapper = new QueryWrapper<Devices>();
-		if (!StringUtils.isEmpty(deviceModel)) {
-			queryWrapper.like("devices_model", deviceModel);
+		if (!StringUtils.isEmpty(devicesModel)) {
+			queryWrapper.eq("devices_model", devicesModel);
 		}
 		if (!StringUtils.isEmpty(userCode)) {
 			queryWrapper.eq("user_code", userCode);
@@ -261,7 +270,7 @@ public class DevicesController {
 			testResults.add(deviceService.getTestResultByDevices(devices.getId()));
 		}
 
-		String excelFile = excelUtils.generateExcel(deviceModel, userCode, new String[] { startDate, endDate },
+		String excelFile = excelUtils.generateExcel(devicesModel, userCode, new String[] { startDate, endDate },
 				testResults);
 
 		if (excelFile != null) {

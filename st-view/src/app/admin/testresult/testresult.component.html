@@ -8,6 +8,8 @@
 
 <div nz-row class="devicesinfo">
   <div nz-col nzSpan="8">串号：{{testResult.devices.serialNumber}}</div>
+  <div nz-col nzSpan="8" *ngIf="testResult.devices.devicesCode != null && testResult.devices.devicesCode != ''">
+    设备编号：{{testResult.devices.devicesCode}}</div>
   <div nz-col nzSpan="8">设备型号：{{testResult.devices.devicesModel}}</div>
   <div nz-col nzSpan="8">系统版本：{{testResult.devices.systemVersion}}</div>
   <div nz-col nzSpan="8">员工编号：{{testResult.devices.userCode}}</div>
